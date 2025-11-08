@@ -1,0 +1,143 @@
+name: Update Homebrew formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: "Formula name"
+        required: true
+        type: string
+      repo:
+        description: "Source GitHub repo"
+        required: true
+        type: string
+      tag:
+        description: "Release tag"
+        required: true
+        type: string
+
+jobs:
+  update-formula:
+    runs-on: ubuntu-latest
+    env:
+      FORMULA: ${{ inputs.formula }}
+      REPO: ${{ inputs.repo }}
+      TAG: ${{ inputs.tag }}
+
+    steps:
+      - name: Checkout tap repository
+        uses: actions/checkout@v4
+
+      - name: Fetch release info from GitHub API and update formula
+        run: |
+          set -euo pipefail
+
+          FORMULA_PATH="Formula/${FORMULA}.rb"
+
+          if [ ! -f "$FORMULA_PATH" ]; then
+            echo "Formula file not found: $FORMULA_PATH"
+            exit 1
+          fi
+
+          echo "Using repo: $REPO"
+          echo "Using tag:  $TAG"
+
+          # Fetch the release by tag
+          RELEASE_JSON=$(curl -sSL \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${REPO}/releases/tags/${TAG}")
+
+          # Basic sanity check
+          MESSAGE=$(echo "$RELEASE_JSON" | jq -r '.message // empty')
+          if [ -n "$MESSAGE" ] && [ "$MESSAGE" != "null" ]; then
+            echo "GitHub API returned error: $MESSAGE"
+            echo "$RELEASE_JSON"
+            exit 1
+          fi
+
+          # Tag -> Version
+          VERSION=$(echo "$RELEASE_JSON" | jq -r '.tag_name')
+          if [ -z "$VERSION" ] || [ "$VERSION" = "null" ]; then
+            echo "Could not determine version (tag_name) from release JSON"
+            exit 1
+          fi
+
+          echo "Release version (tag_name): $VERSION"
+
+          # Extract URLs and digests for each arch
+          ARM_URL=$(echo "$RELEASE_JSON" | jq -r '
+            .assets[]
+            | select(.name | endswith("-aarch64-apple-darwin.tar.gz"))
+            | .browser_download_url
+          ')
+
+          ARM_SHA=$(echo "$RELEASE_JSON" | jq -r '
+            .assets[]
+            | select(.name | endswith("-aarch64-apple-darwin.tar.gz"))
+            | .digest // empty
+          ')
+
+          INTEL_URL=$(echo "$RELEASE_JSON" | jq -r '
+            .assets[]
+            | select(.name | endswith("-x86_64-apple-darwin.tar.gz"))
+            | .browser_download_url
+          ')
+
+          INTEL_SHA=$(echo "$RELEASE_JSON" | jq -r '
+            .assets[]
+            | select(.name | endswith("-x86_64-apple-darwin.tar.gz"))
+            | .digest // empty
+          ')
+
+          if [ -z "$ARM_URL" ] || [ -z "$INTEL_URL" ]; then
+            echo "Could not find one or both asset URLs for the given tag"
+            echo "$RELEASE_JSON"
+            exit 1
+          fi
+
+          if [ -z "$ARM_SHA" ] || [ -z "$INTEL_SHA" ]; then
+            echo "Missing digest on one or both assets."
+            echo "Make sure your upload step sets a sha256 digest on the GitHub assets."
+            echo "ARM_SHA:   '$ARM_SHA'"
+            echo "INTEL_SHA: '$INTEL_SHA'"
+            exit 1
+          fi
+
+          # Strip "sha256:" prefix if present
+          ARM_SHA=${ARM_SHA#sha256:}
+          INTEL_SHA=${INTEL_SHA#sha256:}
+
+          echo "ARM_URL:   $ARM_URL"
+          echo "ARM_SHA:   $ARM_SHA"
+          echo "INTEL_URL: $INTEL_URL"
+          echo "INTEL_SHA: $INTEL_SHA"
+
+          # Update version line
+          perl -pi -e 's/^  version ".+"/  version "'"$VERSION"'"/' "$FORMULA_PATH"
+
+          # Update URLs by matching arch-specific patterns
+          perl -pi -e 's|url ".*aarch64-apple-darwin\.tar\.gz"|url "'"$ARM_URL"'"|' "$FORMULA_PATH"
+          perl -pi -e 's|url ".*x86_64-apple-darwin\.tar\.gz"|url "'"$INTEL_URL"'"|' "$FORMULA_PATH"
+
+          # Update sha256 lines using the trailing comments as anchors
+          perl -pi -e 's/(sha256 ")[^"]+(" # arm64)/$1'"$ARM_SHA"'$2/'   "$FORMULA_PATH"
+          perl -pi -e 's/(sha256 ")[^"]+(" # intel)/$1'"$INTEL_SHA"'$2/' "$FORMULA_PATH"
+
+          echo "Updated formula:"
+          cat "$FORMULA_PATH"
+
+      - name: Commit and push changes
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No changes detected, nothing to commit."
+            exit 0
+          fi
+
+          git add "Formula/${FORMULA}.rb"
+          git commit -m "Update ${FORMULA} to ${TAG}"
+          git push
