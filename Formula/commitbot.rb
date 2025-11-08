@@ -12,7 +12,7 @@ class Commitbot < Formula
 
     on_intel do
       url "https://github.com/MikeGarde/commitbot/releases/download/0.2.1/commitbot-0.2.1-x86_64-apple-darwin.tar.gz"
-      e77c4d84441f77b7154f30c5496cbf2bc41cd8d4a4b7fe217d9c224c9f4" # intel
+      sha256 "e77c4d84441f77b7154f30c5496cbf2bc41cd8d4a4b7fe217d9c224c9f4" # intel
     end
   end
 
