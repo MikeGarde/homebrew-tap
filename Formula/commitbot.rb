@@ -2,17 +2,17 @@ class Commitbot < Formula
   desc "Generate better git commit and PR messages using AI"
   homepage "https://github.com/MikeGarde/commitbot"
   license "GPL-3.0-only"
-  version "0.5.1"
+  version "0.5.2"
 
   on_macos do
     on_arm do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.5.1/commitbot-0.5.1-aarch64-apple-darwin.tar.gz"
-      sha256 "70d7e13b1941b56a47f553cc2337cede2c17e889c672566a682c07f63c2cb6ce" # arm64
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.5.2/commitbot-0.5.2-aarch64-apple-darwin.tar.gz"
+      sha256 "1fc737fab61bb3a0b772ddd9015d7e0ad49907c72163d5922dddeb54e7f2d6e0" # arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.5.1/commitbot-0.5.1-x86_64-apple-darwin.tar.gz"
-      sha256 "67bb00667d98c4183ee7c4e06307a1b0e3ba3b15ddf0b6b698e216c36073a1fa" # intel
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.5.2/commitbot-0.5.2-x86_64-apple-darwin.tar.gz"
+      sha256 "3fed625e28262229a18307d5f78761c77c70a43eb7519666181642d7db44837b" # intel
     end
   end
 
