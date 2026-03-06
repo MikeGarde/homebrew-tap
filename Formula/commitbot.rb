@@ -3,7 +3,6 @@ class Commitbot < Formula
   homepage "https://github.com/MikeGarde/commitbot"
   license "GPL-3.0-only"
   version "0.5.1"
-  depends_on "git"
 
   on_macos do
     on_arm do
