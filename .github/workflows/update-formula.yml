@@ -71,63 +71,110 @@ jobs:
           echo "Release version (tag_name): $VERSION"
 
           # Extract URLs and digests for each arch
-          ARM_URL=$(echo "$RELEASE_JSON" | jq -r '
+          MAC_ARM_URL=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
             | select(.name | endswith("-aarch64-apple-darwin.tar.gz"))
             | .browser_download_url
           ')
 
-          ARM_SHA=$(echo "$RELEASE_JSON" | jq -r '
+          MAC_ARM_SHA=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
             | select(.name | endswith("-aarch64-apple-darwin.tar.gz"))
             | .digest // empty
           ')
 
-          INTEL_URL=$(echo "$RELEASE_JSON" | jq -r '
+          MAC_INTEL_URL=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
             | select(.name | endswith("-x86_64-apple-darwin.tar.gz"))
             | .browser_download_url
           ')
 
-          INTEL_SHA=$(echo "$RELEASE_JSON" | jq -r '
+          MAC_INTEL_SHA=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
             | select(.name | endswith("-x86_64-apple-darwin.tar.gz"))
             | .digest // empty
           ')
 
-          if [ -z "$ARM_URL" ] || [ -z "$INTEL_URL" ]; then
-            echo "Could not find one or both asset URLs for the given tag"
+          LINUX_ARM_URL=$(echo "$RELEASE_JSON" | jq -r '
+            .assets[]
+            | select(.name | endswith("-aarch64-unknown-linux-gnu.tar.gz"))
+            | .browser_download_url
+          ')
+
+          LINUX_ARM_SHA=$(echo "$RELEASE_JSON" | jq -r '
+            .assets[]
+            | select(.name | endswith("-aarch64-unknown-linux-gnu.tar.gz"))
+            | .digest // empty
+          ')
+
+          LINUX_INTEL_URL=$(echo "$RELEASE_JSON" | jq -r '
+            .assets[]
+            | select(.name | endswith("-x86_64-unknown-linux-gnu.tar.gz"))
+            | .browser_download_url
+          ')
+
+          LINUX_INTEL_SHA=$(echo "$RELEASE_JSON" | jq -r '
+            .assets[]
+            | select(.name | endswith("-x86_64-unknown-linux-gnu.tar.gz"))
+            | .digest // empty
+          ')
+
+          if [ -z "$MAC_ARM_URL" ] || [ -z "$MAC_INTEL_URL" ]; then
+            echo "Could not find one or both macOS asset URLs for the given tag"
             echo "$RELEASE_JSON"
             exit 1
           fi
 
-          if [ -z "$ARM_SHA" ] || [ -z "$INTEL_SHA" ]; then
-            echo "Missing digest on one or both assets."
+          if [ -z "$MAC_ARM_SHA" ] || [ -z "$MAC_INTEL_SHA" ]; then
+            echo "Missing digest on one or both macOS assets."
             echo "Make sure your upload step sets a sha256 digest on the GitHub assets."
-            echo "ARM_SHA:   '$ARM_SHA'"
-            echo "INTEL_SHA: '$INTEL_SHA'"
+            echo "MAC_ARM_SHA:   '$MAC_ARM_SHA'"
+            echo "MAC_INTEL_SHA: '$MAC_INTEL_SHA'"
             exit 1
           fi
 
           # Strip "sha256:" prefix if present
-          ARM_SHA=${ARM_SHA#sha256:}
-          INTEL_SHA=${INTEL_SHA#sha256:}
+          MAC_ARM_SHA=${MAC_ARM_SHA#sha256:}
+          MAC_INTEL_SHA=${MAC_INTEL_SHA#sha256:}
+          LINUX_ARM_SHA=${LINUX_ARM_SHA#sha256:}
+          LINUX_INTEL_SHA=${LINUX_INTEL_SHA#sha256:}
 
-          echo "ARM_URL:   $ARM_URL"
-          echo "ARM_SHA:   $ARM_SHA"
-          echo "INTEL_URL: $INTEL_URL"
-          echo "INTEL_SHA: $INTEL_SHA"
+          LINUX_COMPLETE=false
+          if [ -n "$LINUX_ARM_URL" ] && [ -n "$LINUX_INTEL_URL" ] && [ -n "$LINUX_ARM_SHA" ] && [ -n "$LINUX_INTEL_SHA" ]; then
+            LINUX_COMPLETE=true
+          fi
+
+          echo "MAC_ARM_URL:     $MAC_ARM_URL"
+          echo "MAC_ARM_SHA:     $MAC_ARM_SHA"
+          echo "MAC_INTEL_URL:   $MAC_INTEL_URL"
+          echo "MAC_INTEL_SHA:   $MAC_INTEL_SHA"
+          if [ "$LINUX_COMPLETE" = true ]; then
+            echo "LINUX_ARM_URL:   $LINUX_ARM_URL"
+            echo "LINUX_ARM_SHA:   $LINUX_ARM_SHA"
+            echo "LINUX_INTEL_URL: $LINUX_INTEL_URL"
+            echo "LINUX_INTEL_SHA: $LINUX_INTEL_SHA"
+          else
+            echo "Linux GNU assets or digests were not all present; updating macOS only."
+          fi
 
           # Update version line
           perl -pi -e 's/^  version ".+"/  version "'"$VERSION"'"/' "$FORMULA_PATH"
 
           # Update URLs by matching arch-specific patterns
-          perl -pi -e 's|url ".*aarch64-apple-darwin\.tar\.gz"|url "'"$ARM_URL"'"|' "$FORMULA_PATH"
-          perl -pi -e 's|url ".*x86_64-apple-darwin\.tar\.gz"|url "'"$INTEL_URL"'"|' "$FORMULA_PATH"
+          perl -pi -e 's|url ".*aarch64-apple-darwin\.tar\.gz"|url "'"$MAC_ARM_URL"'"|' "$FORMULA_PATH"
+          perl -pi -e 's|url ".*x86_64-apple-darwin\.tar\.gz"|url "'"$MAC_INTEL_URL"'"|' "$FORMULA_PATH"
 
           # Update sha256 lines using the trailing comments as anchors
-          perl -pi -e 's/sha256 "[^"]*" # arm64/sha256 "'"$ARM_SHA"'" # arm64/' "$FORMULA_PATH"
-          perl -pi -e 's/sha256 "[^"]*" # intel/sha256 "'"$INTEL_SHA"'" # intel/' "$FORMULA_PATH"
+          perl -pi -e 's/sha256 "[^"]*" # mac arm64/sha256 "'"$MAC_ARM_SHA"'" # mac arm64/' "$FORMULA_PATH"
+          perl -pi -e 's/sha256 "[^"]*" # mac intel/sha256 "'"$MAC_INTEL_SHA"'" # mac intel/' "$FORMULA_PATH"
+
+          if [ "$LINUX_COMPLETE" = true ]; then
+            perl -pi -e 's|url ".*aarch64-unknown-linux-gnu\.tar\.gz"|url "'"$LINUX_ARM_URL"'"|' "$FORMULA_PATH"
+            perl -pi -e 's|url ".*x86_64-unknown-linux-gnu\.tar\.gz"|url "'"$LINUX_INTEL_URL"'"|' "$FORMULA_PATH"
+          
+            perl -pi -e 's/sha256 "[^"]*" # linux arm64/sha256 "'"$LINUX_ARM_SHA"'" # linux arm64/' "$FORMULA_PATH"
+            perl -pi -e 's/sha256 "[^"]*" # linux intel/sha256 "'"$LINUX_INTEL_SHA"'" # linux intel/' "$FORMULA_PATH"
+          fi
 
           echo "Updated formula:"
           cat "$FORMULA_PATH"
