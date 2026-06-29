@@ -1,30 +1,30 @@
 class Commitbot < Formula
   desc "Generate better git commit and PR messages using AI"
   homepage "https://github.com/MikeGarde/commitbot"
-  version "0.6.2"
+  version "0.6.4"
   license "GPL-3.0-only"
 
   on_macos do
     on_arm do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.2/commitbot-0.6.2-aarch64-apple-darwin.tar.gz"
-      sha256 "0ea77546e9e23fd4484be26febfaa3ccbb40a317ed348feda6c37f48c606d18c" # mac arm64
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.4/commitbot-0.6.4-aarch64-apple-darwin.tar.gz"
+      sha256 "0094d15b9e5f8536cd8bfb229b1f8ce1d18140c25d5e91c4ffc260dca7f9076f" # mac arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.2/commitbot-0.6.2-x86_64-apple-darwin.tar.gz"
-      sha256 "3d7fc6da9dc48b47a52c2e9311c443cbdbd8b8b33c4909355c2453d8ffeb24e6" # mac intel
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.4/commitbot-0.6.4-x86_64-apple-darwin.tar.gz"
+      sha256 "bdd1ce9e3f626b4b4d3727bf2edd6d3927b46644de64816c3eaa19d0e361688f" # mac intel
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.2/commitbot-0.6.2-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "00000000000000000000000" # linux arm64
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.4/commitbot-0.6.4-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "2a382b85f857cfa08608b5443ebc91098c02431e49db51436e29b43cdde8d656" # linux arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.2/commitbot-0.6.2-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "00000000000000000000000" # linux intel
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.4/commitbot-0.6.4-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "7090652ba06e69e8af420222f7248095e5b37992ca5a81e24fc0400a086a6506" # linux intel
     end
   end
 
