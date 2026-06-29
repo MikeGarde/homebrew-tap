@@ -1,30 +1,30 @@
 class DotenvCli < Formula
   desc "Read and update dotenv files from the cli"
   homepage "https://github.com/MikeGarde/dotenv-cli"
-  version "0.0.0"
+  version "1.0.0"
   license "GPL-3.0-or-later"
 
   on_macos do
     on_arm do
       url "https://github.com/MikeGarde/dotenv-cli/releases/download/0.0.0/commitbot-0.0.0-aarch64-apple-darwin.tar.gz"
-      sha256 "00000000000000000000000" # mac arm64
+      sha256 "2b5cb8e37debd7e157d1b35c4b28dcff3711fa7d5d07cd8912a4787a7c9405de" # mac arm64
     end
 
     on_intel do
       url "https://github.com/MikeGarde/dotenv-cli/releases/download/0.0.0/commitbot-0.0.0-x86_64-apple-darwin.tar.gz"
-      sha256 "00000000000000000000000" # mac intel
+      sha256 "e24f5638a295023d7fb201e01337e87a82e527c163690a8db8d5db60c55a352e" # mac intel
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/MikeGarde/dotenv-cli/releases/download/0.0.0/commitbot-0.0.0-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "00000000000000000000000" # linux arm64
+      sha256 "43a0f108b15fe42328a2050e9988c2e74b2ac7a86a49f9fb695162f95c4cd661" # linux arm64
     end
 
     on_intel do
       url "https://github.com/MikeGarde/dotenv-cli/releases/download/0.0.0/commitbot-0.0.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "00000000000000000000000" # linux intel
+      sha256 "f50e4f1a04396e157207fd2379b49d07e568a6d73b2b2452c21eb15cf8239352" # linux intel
     end
   end
 
