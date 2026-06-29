@@ -1,8 +1,8 @@
-class dotenv-cli < Formula
-  desc ""
+class DotenvCli < Formula
+  desc "Read and update dotenv files from the cli"
   homepage "https://github.com/MikeGarde/dotenv-cli"
   version "0.0.0"
-  license "GPL-3.0-only"
+  license "GPL-3.0-or-later"
 
   on_macos do
     on_arm do
