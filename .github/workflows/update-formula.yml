@@ -176,6 +176,23 @@ jobs:
             perl -pi -e 's/sha256 "[^"]*" # linux intel/sha256 "'"$LINUX_INTEL_SHA"'" # linux intel/' "$FORMULA_PATH"
           fi
 
+          assert_url_present() {
+            if ! grep -qF "$1" "$FORMULA_PATH"; then
+              echo "ERROR: formula was not updated with the expected URL:" >&2
+              echo "  $1" >&2
+              echo "The matching 'url' line in $FORMULA_PATH did not match the rewrite pattern." >&2
+              echo "Check that the formula's url suffixes match the release asset names." >&2
+              exit 1
+            fi
+          }
+
+          assert_url_present "$MAC_ARM_URL"
+          assert_url_present "$MAC_INTEL_URL"
+          if [ "$LINUX_COMPLETE" = true ]; then
+            assert_url_present "$LINUX_ARM_URL"
+            assert_url_present "$LINUX_INTEL_URL"
+          fi
+
           echo "Updated formula:"
           cat "$FORMULA_PATH"
 
