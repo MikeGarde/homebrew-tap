@@ -1,30 +1,30 @@
 class DotenvCli < Formula
   desc "Read and update dotenv files from the cli"
   homepage "https://github.com/MikeGarde/dotenv-cli"
-  version "1.0.1"
+  version "1.1.0"
   license "GPL-3.0-or-later"
 
   on_macos do
     on_arm do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.0.1/dotenv-cli-1.0.1-apple-darwin-aarch64.tar.gz"
-      sha256 "dbc5f51055db4b0b8fe2bacbca041193ee1938c5935512aaabf00bfff5d76e22" # mac arm64
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.1.0/dotenv-cli-1.1.0-apple-darwin-aarch64.tar.gz"
+      sha256 "d42a5eda873556f7666b69482ca49abed517605032e4ed36fde65ef876f868cc" # mac arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.0.1/dotenv-cli-1.0.1-apple-darwin-x86_64.tar.gz"
-      sha256 "a24c3c2a277315116d454b74fdbdd603fb73451be95dee8fe55810399c77915b" # mac intel
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.1.0/dotenv-cli-1.1.0-apple-darwin-x86_64.tar.gz"
+      sha256 "62fc2276c96e1f8517dcb96bf2dc6bb5cf1adf14bd071d59932f5bfadee15368" # mac intel
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.0.1/dotenv-cli-1.0.1-unknown-linux-gnu-aarch64.tar.gz"
-      sha256 "caee52adcad70511fde4fcaf227c73238e72f34742a906334f6c08aeb63f8c47" # linux arm64
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.1.0/dotenv-cli-1.1.0-unknown-linux-gnu-aarch64.tar.gz"
+      sha256 "bf5cff158a01f5ca3d806503bdf2489a166b1502a462c3c0e7042cfd35a4c57c" # linux arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.0.1/dotenv-cli-1.0.1-unknown-linux-gnu-x86_64.tar.gz"
-      sha256 "6b564ae4238da5ba51a80a6c8693f23f6f738cbbc2f0d0d05bc41f6aa14220b1" # linux intel
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.1.0/dotenv-cli-1.1.0-unknown-linux-gnu-x86_64.tar.gz"
+      sha256 "a69aa81dd6b4a57ab32565813492e2126faa4dc36e7bb4eff6728cb45d029a7b" # linux intel
     end
   end
 
