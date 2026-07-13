@@ -73,49 +73,49 @@ jobs:
           # Extract URLs and digests for each arch
           MAC_ARM_URL=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
-            | select(.name | endswith("-apple-darwin-aarch64.tar.gz"))
+            | select(.name | endswith("-apple-darwin-aarch64.gz"))
             | .browser_download_url
           ')
 
           MAC_ARM_SHA=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
-            | select(.name | endswith("-apple-darwin-aarch64.tar.gz"))
+            | select(.name | endswith("-apple-darwin-aarch64.gz"))
             | .digest // empty
           ')
 
           MAC_INTEL_URL=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
-            | select(.name | endswith("-apple-darwin-x86_64.tar.gz"))
+            | select(.name | endswith("-apple-darwin-x86_64.gz"))
             | .browser_download_url
           ')
 
           MAC_INTEL_SHA=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
-            | select(.name | endswith("-apple-darwin-x86_64.tar.gz"))
+            | select(.name | endswith("-apple-darwin-x86_64.gz"))
             | .digest // empty
           ')
 
           LINUX_ARM_URL=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
-            | select(.name | endswith("-unknown-linux-gnu-aarch64.tar.gz"))
+            | select(.name | endswith("-unknown-linux-gnu-aarch64.gz"))
             | .browser_download_url
           ')
 
           LINUX_ARM_SHA=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
-            | select(.name | endswith("-unknown-linux-gnu-aarch64.tar.gz"))
+            | select(.name | endswith("-unknown-linux-gnu-aarch64.gz"))
             | .digest // empty
           ')
 
           LINUX_INTEL_URL=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
-            | select(.name | endswith("-unknown-linux-gnu-x86_64.tar.gz"))
+            | select(.name | endswith("-unknown-linux-gnu-x86_64.gz"))
             | .browser_download_url
           ')
 
           LINUX_INTEL_SHA=$(echo "$RELEASE_JSON" | jq -r '
             .assets[]
-            | select(.name | endswith("-unknown-linux-gnu-x86_64.tar.gz"))
+            | select(.name | endswith("-unknown-linux-gnu-x86_64.gz"))
             | .digest // empty
           ')
 
@@ -161,16 +161,16 @@ jobs:
           perl -pi -e 's/^  version ".+"/  version "'"$VERSION"'"/' "$FORMULA_PATH"
 
           # Update URLs by matching arch-specific patterns
-          perl -pi -e 's|url ".*apple-darwin-aarch64\.tar\.gz"|url "'"$MAC_ARM_URL"'"|' "$FORMULA_PATH"
-          perl -pi -e 's|url ".*apple-darwin-x86_64\.tar\.gz"|url "'"$MAC_INTEL_URL"'"|' "$FORMULA_PATH"
+          perl -pi -e 's|url ".*apple-darwin-aarch64\.gz"|url "'"$MAC_ARM_URL"'"|' "$FORMULA_PATH"
+          perl -pi -e 's|url ".*apple-darwin-x86_64\.gz"|url "'"$MAC_INTEL_URL"'"|' "$FORMULA_PATH"
 
           # Update sha256 lines using the trailing comments as anchors
           perl -pi -e 's/sha256 "[^"]*" # mac arm64/sha256 "'"$MAC_ARM_SHA"'" # mac arm64/' "$FORMULA_PATH"
           perl -pi -e 's/sha256 "[^"]*" # mac intel/sha256 "'"$MAC_INTEL_SHA"'" # mac intel/' "$FORMULA_PATH"
 
           if [ "$LINUX_COMPLETE" = true ]; then
-            perl -pi -e 's|url ".*unknown-linux-gnu-aarch64\.tar\.gz"|url "'"$LINUX_ARM_URL"'"|' "$FORMULA_PATH"
-            perl -pi -e 's|url ".*unknown-linux-gnu-x86_64\.tar\.gz"|url "'"$LINUX_INTEL_URL"'"|' "$FORMULA_PATH"
+            perl -pi -e 's|url ".*unknown-linux-gnu-aarch64\.gz"|url "'"$LINUX_ARM_URL"'"|' "$FORMULA_PATH"
+            perl -pi -e 's|url ".*unknown-linux-gnu-x86_64\.gz"|url "'"$LINUX_INTEL_URL"'"|' "$FORMULA_PATH"
           
             perl -pi -e 's/sha256 "[^"]*" # linux arm64/sha256 "'"$LINUX_ARM_SHA"'" # linux arm64/' "$FORMULA_PATH"
             perl -pi -e 's/sha256 "[^"]*" # linux intel/sha256 "'"$LINUX_INTEL_SHA"'" # linux intel/' "$FORMULA_PATH"
