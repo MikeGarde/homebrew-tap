@@ -1,30 +1,30 @@
 class DotenvCli < Formula
   desc "Read and update dotenv files from the cli"
   homepage "https://github.com/MikeGarde/dotenv-cli"
-  version "1.1.2"
+  version "1.2.0"
   license "GPL-3.0-or-later"
 
   on_macos do
     on_arm do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.1.2/dotenv-cli-1.1.2-apple-darwin-aarch64.gz"
-      sha256 "6e72fca2839639e61837f25075cc7e613918196ad789324a182742562b08150f" # mac arm64
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.2.0/dotenv-cli-1.2.0-apple-darwin-aarch64.gz"
+      sha256 "1426a29074b59f992999d3363fa3a37e490c2208b5da7864da109c47908788c5" # mac arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.1.2/dotenv-cli-1.1.2-apple-darwin-x86_64.gz"
-      sha256 "df2234ad2800c6fe71a4191a48b91ea57908d9f195fc3905fcd87c1b6827c42e" # mac intel
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.2.0/dotenv-cli-1.2.0-apple-darwin-x86_64.gz"
+      sha256 "bc40b6f111e4d87b72ec63b78656b5cd4d43eb4f4a427264fd47ab5e179c95c1" # mac intel
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.1.2/dotenv-cli-1.1.2-unknown-linux-gnu-aarch64.gz"
-      sha256 "b53eded8675deaa06c93bb8db54a6f4ff58c3d030a0c16d747604067da913fae" # linux arm64
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.2.0/dotenv-cli-1.2.0-unknown-linux-gnu-aarch64.gz"
+      sha256 "8db6c6946dd5f9eb73b513e6ce5c0ab3ae38f17f6d17af4c6dd36d0cedb8c4bb" # linux arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.1.2/dotenv-cli-1.1.2-unknown-linux-gnu-x86_64.gz"
-      sha256 "54b6cb0ef7f93fd2bbe0de390f76a5b624b7b835317c592c13f74728d2ebcf79" # linux intel
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.2.0/dotenv-cli-1.2.0-unknown-linux-gnu-x86_64.gz"
+      sha256 "38cb2a1a5e715de778d102c8f95f29e9aac4d301f143de6afe1addfcd2cd605e" # linux intel
     end
   end
 
