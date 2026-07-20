@@ -1,30 +1,30 @@
 class DotenvCli < Formula
   desc "Read and update dotenv files from the cli"
   homepage "https://github.com/MikeGarde/dotenv-cli"
-  version "1.2.1"
+  version "2.0.0"
   license "GPL-3.0-or-later"
 
   on_macos do
     on_arm do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.2.1/dotenv-cli-1.2.1-apple-darwin-aarch64.gz"
-      sha256 "c7a8fce1fcd6d17e00059ebd8c6fa6e57783cb97b21564344e6d06861e6250a1" # mac arm64
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.0/dotenv-cli-2.0.0-apple-darwin-aarch64.gz"
+      sha256 "5e7ab935dde40013a40ed82454da7d1b9797293e6382902f70e8ddf1b8dd83ba" # mac arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.2.1/dotenv-cli-1.2.1-apple-darwin-x86_64.gz"
-      sha256 "642991c7662e3469b357f39f797a9b63fc1f67002210c195cbb6ac1efacf1094" # mac intel
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.0/dotenv-cli-2.0.0-apple-darwin-x86_64.gz"
+      sha256 "fc608132de8f9a680acf8534b87e04aef18d9646cbfde256bf824ee50d8c8642" # mac intel
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.2.1/dotenv-cli-1.2.1-unknown-linux-gnu-aarch64.gz"
-      sha256 "f3ffefddf4103848823b7e39262cc12bd056b054b7535b40754953325ca7bb14" # linux arm64
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.0/dotenv-cli-2.0.0-unknown-linux-gnu-aarch64.gz"
+      sha256 "7aa5870b102eb834680e507f2dd6443f99948ecbb606c6ac648dcb78a9ba9d01" # linux arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/1.2.1/dotenv-cli-1.2.1-unknown-linux-gnu-x86_64.gz"
-      sha256 "a80cb4e9f8bdffbb495cdd13e47bc86824f2a3addb5fe3262eac854d0a88aab5" # linux intel
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.0/dotenv-cli-2.0.0-unknown-linux-gnu-x86_64.gz"
+      sha256 "b4f123011f831384923a01ccde2b285ec331f55c36e25c98021ccc6ac3edc77a" # linux intel
     end
   end
 
