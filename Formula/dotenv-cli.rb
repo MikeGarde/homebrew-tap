@@ -1,30 +1,30 @@
 class DotenvCli < Formula
   desc "Read and update dotenv files from the cli"
   homepage "https://github.com/MikeGarde/dotenv-cli"
-  version "2.0.0"
+  version "2.0.1"
   license "GPL-3.0-or-later"
 
   on_macos do
     on_arm do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.0/dotenv-cli-2.0.0-apple-darwin-aarch64.gz"
-      sha256 "5e7ab935dde40013a40ed82454da7d1b9797293e6382902f70e8ddf1b8dd83ba" # mac arm64
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.1/dotenv-cli-2.0.1-apple-darwin-aarch64.gz"
+      sha256 "3028eb7a38a83d4f1fa56767568842700a5749eecdd8fa81f9f3775da71971d8" # mac arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.0/dotenv-cli-2.0.0-apple-darwin-x86_64.gz"
-      sha256 "fc608132de8f9a680acf8534b87e04aef18d9646cbfde256bf824ee50d8c8642" # mac intel
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.1/dotenv-cli-2.0.1-apple-darwin-x86_64.gz"
+      sha256 "02ee6b9a611d6bf7ef82ddc7129dbbacecc181d594d4f5dc3ff6c83b5bea0d0c" # mac intel
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.0/dotenv-cli-2.0.0-unknown-linux-gnu-aarch64.gz"
-      sha256 "7aa5870b102eb834680e507f2dd6443f99948ecbb606c6ac648dcb78a9ba9d01" # linux arm64
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.1/dotenv-cli-2.0.1-unknown-linux-gnu-aarch64.gz"
+      sha256 "290ac8d0f6347ddc1d6ebbeb9f40ac3063b50a786c5e656db1d096f1f8e67319" # linux arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.0/dotenv-cli-2.0.0-unknown-linux-gnu-x86_64.gz"
-      sha256 "b4f123011f831384923a01ccde2b285ec331f55c36e25c98021ccc6ac3edc77a" # linux intel
+      url "https://github.com/MikeGarde/dotenv-cli/releases/download/2.0.1/dotenv-cli-2.0.1-unknown-linux-gnu-x86_64.gz"
+      sha256 "efb9cafceb4efadabc1d1995f9db1db8f8642c582d9a5dab40d7e157bbdb30d4" # linux intel
     end
   end
 
