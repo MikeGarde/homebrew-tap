@@ -1,35 +1,35 @@
 class Commitbot < Formula
   desc "Generate better git commit and PR messages using AI"
   homepage "https://github.com/MikeGarde/commitbot"
-  version "0.6.4"
+  version "0.7.1"
   license "GPL-3.0-only"
 
   on_macos do
     on_arm do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.4/commitbot-0.6.4-aarch64-apple-darwin.tar.gz"
-      sha256 "0094d15b9e5f8536cd8bfb229b1f8ce1d18140c25d5e91c4ffc260dca7f9076f" # mac arm64
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.7.1/commitbot-0.7.1-apple-darwin-aarch64.gz"
+      sha256 "e572e0ff58b1b1846a895aeec594b2ffba60b1ac5240b7aeb39ad726837f51b7" # mac arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.4/commitbot-0.6.4-x86_64-apple-darwin.tar.gz"
-      sha256 "bdd1ce9e3f626b4b4d3727bf2edd6d3927b46644de64816c3eaa19d0e361688f" # mac intel
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.7.1/commitbot-0.7.1-apple-darwin-x86_64.gz"
+      sha256 "305f95d910b9b0a9f89da76be418d962734a86fd04f0ed4e28075d08e7dd9658" # mac intel
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.4/commitbot-0.6.4-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "2a382b85f857cfa08608b5443ebc91098c02431e49db51436e29b43cdde8d656" # linux arm64
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.7.1/commitbot-0.7.1-unknown-linux-gnu-aarch64.gz"
+      sha256 "f4232771ec1ca40df814e3d51762f452d224ed30b846fcd9070983ad6d347faa" # linux arm64
     end
 
     on_intel do
-      url "https://github.com/MikeGarde/commitbot/releases/download/0.6.4/commitbot-0.6.4-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "7090652ba06e69e8af420222f7248095e5b37992ca5a81e24fc0400a086a6506" # linux intel
+      url "https://github.com/MikeGarde/commitbot/releases/download/0.7.1/commitbot-0.7.1-unknown-linux-gnu-x86_64.gz"
+      sha256 "23c4032d1eab0cc0878d1b303efe8cf55db39c7eb31e338014cd338a36e84e20" # linux intel
     end
   end
 
   def install
-    bin.install "commitbot"
+    bin.install Dir["commitbot-*"].first => "commitbot"
   end
 
   test do
